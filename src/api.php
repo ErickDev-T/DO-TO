@@ -32,7 +32,7 @@ $method = $_SERVER['REQUEST_METHOD']; //Según el método, el servidor ejecutar�
 switch ($method) {
     // Llama al procedimiento almacenadosp_getUsuarios() que retorna todos los registros de la tabla usuarios.
     case "GET":
-        $sql = "CALL sp_getUsuarios()";
+        $sql = "CALL sp_read_tack()";
         $result = $conn->query($sql);
         $data = [];
 
@@ -49,12 +49,11 @@ switch ($method) {
     case "POST":
         // json_decode(..., true): Convierte el JSON en un arreglo asociativo.
         // file_get_contents("php://input"): Obtiene los datos enviados por el cliente (en formato JSON).
-        $input = json_decode(file_get_contents("php://input"), true);
-        $nombre = $input['nombre'];
-        $email = $input['email'];
-        $telefono = $input['telefono'];
+        $input = json_decode(file_get_contents(filename: "php://input"), true);
+        $name = $input['name_taks'];
+        $description = $input['description_taks'];
         // $stmt->prepare(): Prepare una consulta con parámetros para prevenir inyecciones SQL.
-        $stmt = $conn->prepare("CALL sp_createUsuario(?, ?, ?)");
+        $stmt = $conn->prepare("CALL sp_nuw_tack(?, ?)");
         // bind_param("sss", ...): Enlaza los parámetros ( ssssignifica que son 3 cadenas de texto).
         $stmt->bind_param("sss", $nombre, $email, $telefono);
         $stmt->execute();// stmt->execute(): Ejecuta el procedimiento almacenado sp_createUsuario.
@@ -64,12 +63,11 @@ switch ($method) {
     case "PUT":
         // Similar al caso POST, pero además incluye el ID del usuario que se actualizará.
         $input = json_decode(file_get_contents("php://input"), true);
-        $id = $input['id'];
-        $nombre = $input['nombre'];
-        $email = $input['email'];
-        $telefono = $input['telefono'];
+        $id = $input['id_tasks'];
+        $name = $input['name_taks'];
+        $description = $input['description_taks'];
         // Llama al procedimiento almacenado sp_updateUsuario.
-        $stmt = $conn->prepare("CALL sp_updateUsuario(?, ?, ?, ?)");
+        $stmt = $conn->prepare("CALL sp_update_taks(?, ?, ?)");
         $stmt->bind_param("isss", $id, $nombre, $email, $telefono);
         $stmt->execute();
         echo json_encode(["message" => "Usuario actualizado"]);
@@ -78,9 +76,9 @@ switch ($method) {
     case "DELETE":
         // Obtiene el ID del usuario desde el cliente.
         $input = json_decode(file_get_contents("php://input"), true);
-        $id = $input['id'];
+        $id = $input['id_tasks'];
         // Llama al procedimiento almacenado sp_deleteUsuariopara eliminar el registro correspondiente.
-        $stmt = $conn->prepare("CALL sp_deleteUsuario(?)");
+        $stmt = $conn->prepare("CALL sp_delete(?)");
         $stmt->bind_param("i", $id);
         $stmt->execute();
         echo json_encode(["message" => "Usuario eliminado"]);
