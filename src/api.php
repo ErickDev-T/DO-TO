@@ -55,7 +55,7 @@ switch ($method) {
         // $stmt->prepare(): Prepare una consulta con parámetros para prevenir inyecciones SQL.
         $stmt = $conn->prepare("CALL sp_nuw_tack(?, ?)");
         // bind_param("sss", ...): Enlaza los parámetros ( ssssignifica que son 3 cadenas de texto).
-        $stmt->bind_param("sss", $nombre, $email, $telefono);
+        $stmt->bind_param("ss", $name, $description, );
         $stmt->execute();// stmt->execute(): Ejecuta el procedimiento almacenado sp_createUsuario.
         echo json_encode(["message" => "Usuario creado"]);
         break;
@@ -68,7 +68,7 @@ switch ($method) {
         $description = $input['description_taks'];
         // Llama al procedimiento almacenado sp_updateUsuario.
         $stmt = $conn->prepare("CALL sp_update_taks(?, ?, ?)");
-        $stmt->bind_param("isss", $id, $nombre, $email, $telefono);
+        $stmt->bind_param("iss", $id, $name, $description);
         $stmt->execute();
         echo json_encode(["message" => "Usuario actualizado"]);
         break;
