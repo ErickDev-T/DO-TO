@@ -30,7 +30,7 @@ $method = $_SERVER['REQUEST_METHOD']; //Según el método, el servidor ejecutar�
 
 // Manejar solicitudes
 switch ($method) {
-    // Llama al procedimiento almacenadosp_getUsuarios() que retorna todos los registros de la tabla usuarios.
+    // Llama al procedimient almacenadosp_getUsuarios() que retorna todos los registros de la tabla usuarios.
     case "GET":
         $sql = "CALL sp_getUsuarios()";
         $result = $conn->query($sql);
