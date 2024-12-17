@@ -55,7 +55,7 @@ switch ($method) {
         // $stmt->prepare(): Prepare una consulta con parámetros para prevenir inyecciones SQL.
         $stmt = $conn->prepare("CALL sp_nuw_tack(?, ?)");
         // bind_param("sss", ...): Enlaza los parámetros ( ssssignifica que son 3 cadenas de texto).
-        $stmt->bind_param("ss", $name, $description, );
+        $stmt->bind_param("ss", $name, $description);
         $stmt->execute();// stmt->execute(): Ejecuta el procedimiento almacenado sp_createUsuario.
         echo json_encode(["message" => "Tarea creado"]);
         break;
