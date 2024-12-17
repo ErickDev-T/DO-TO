@@ -57,7 +57,7 @@ switch ($method) {
         // bind_param("sss", ...): Enlaza los parámetros ( ssssignifica que son 3 cadenas de texto).
         $stmt->bind_param("ss", $name, $description, );
         $stmt->execute();// stmt->execute(): Ejecuta el procedimiento almacenado sp_createUsuario.
-        echo json_encode(["message" => "Usuario creado"]);
+        echo json_encode(["message" => "Tarea creado"]);
         break;
 
     case "PUT":
@@ -70,7 +70,7 @@ switch ($method) {
         $stmt = $conn->prepare("CALL sp_update_taks(?, ?, ?)");
         $stmt->bind_param("iss", $id, $name, $description);
         $stmt->execute();
-        echo json_encode(["message" => "Usuario actualizado"]);
+        echo json_encode(["message" => "Tarea actualizado"]);
         break;
 
     case "DELETE":
@@ -81,7 +81,7 @@ switch ($method) {
         $stmt = $conn->prepare("CALL sp_delete(?)");
         $stmt->bind_param("i", $id);
         $stmt->execute();
-        echo json_encode(["message" => "Usuario eliminado"]);
+        echo json_encode(["message" => "Tarea eliminada"]);
         break;
 }
 // Cierra la conexión a la base de datos al final del script para liberar recursos.
